@@ -2,20 +2,31 @@ require 'dry-validation'
 
 module SlackDeployBot
   class InvalidAppConfig < StandardError; end
-  class AppConfigValidator
-    AppConfigSchema = Dry::Validation.Schema do
-      required(:envs).filled
-      required(:path).filled
-      required(:deploy_cmd).filled
+  class AppConfigValidator < Dry::Validation::Contract
+    params do
+      required(:envs).value(:string)
+      required(:path).value(:string)
+      required(:deploy_cmd).value(:string)
     end
 
-    def self.validate(app_name, config)
-      validation_result = AppConfigSchema.call(config)
+    rule(:envs) do
+      key.failure('cannot be empty') if value.to_s.strip.empty?
+    end
 
-      if validation_result.failure?
-        errors = validation_result.errors(full: true).values
-        raise InvalidAppConfig, "app: <#{app_name}> errors: <#{errors.join(', ')}>"
-      end
+    rule(:path) do
+      key.failure('cannot be empty') if value.to_s.strip.empty?
+    end
+
+    rule(:deploy_cmd) do
+      key.failure('cannot be empty') if value.to_s.strip.empty?
+    end
+
+    validation_result = AppConfigValidator.new
+    validation_result.call(config)
+
+    def self.validate(app_name, config)
+      validation_result = AppConfigValidator.new
+      validation_result.call(config)
     end
   end
 end

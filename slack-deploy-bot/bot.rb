@@ -1,6 +1,5 @@
 SlackRubyBot.configure do |config|
   config.send_gifs = false
-  config.i18n.fallbacks = [I18n.default_locale]
 end
 
 module SlackDeployBot
