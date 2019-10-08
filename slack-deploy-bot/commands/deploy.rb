@@ -51,11 +51,11 @@ module SlackDeployBot
   module Commands
     class Deploy < SlackRubyBot::Commands::Base
 
-      match(/(deploy|накати|задеплой) ((?<app>.+)#(?<branch>.+)|(?<app>.+)) (to|на) (?<env>.+)/i) do |client, data, match|
+      match(/(deploy) ((?<app>.+)#(?<branch>.+)|(?<app>.+)) (to) (?<env>.+)/i) do |client, data, match|
         SlackDeployBot.deploy_app(app_name: match[:app], branch: match[:branch], env: match[:env], client: client, data: data)
       end
 
-      match(/(deploy|накати|задеплой) ((?<app>.+)#(?<branch>.+)|(?<app>.+))/i) do |client, data, match|
+      match(/(deploy) ((?<app>.+)#(?<branch>.+)|(?<app>.+))/i) do |client, data, match|
         SlackDeployBot.deploy_app(app_name: match[:app], branch: match[:branch], client: client, data: data)
       end
 

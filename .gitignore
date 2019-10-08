@@ -2,3 +2,4 @@
 *.log
 config/slack-deploy-bot.eye
 config/config.rb
+.bundle/

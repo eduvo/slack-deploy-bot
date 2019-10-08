@@ -28,10 +28,10 @@ module SlackDeployBot
       def initialize(base_path)
         @base_path = base_path
         @output_to = if ENV['ENV'] == 'test'
-                       File::NULL
-                     else
-                       STDOUT
-                     end
+          File::NULL
+        else
+          STDOUT
+        end
       end
 
       def branch_exists?(branch)

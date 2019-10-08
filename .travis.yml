@@ -4,5 +4,5 @@ cache: bundler
 
 matrix:
   include:
-    - rvm: 2.3.0
+    - rvm: 2.6.3
     - rvm: ruby-head

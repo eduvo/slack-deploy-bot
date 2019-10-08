@@ -1,5 +1,6 @@
 SlackRubyBot.configure do |config|
   config.send_gifs = false
+  config.i18n.fallbacks = [I18n.default_locale]
 end
 
 module SlackDeployBot
@@ -27,7 +28,7 @@ module SlackDeployBot
       desc 'This bot can deploy something to somewhere :)'
 
       command 'deploy' do
-        desc "Command format is: *deploy|накати|задеплой (#{SlackDeployBot.apps.keys.join('|')})#branch_or_tag to|на production*"
+        desc "Command format is: *deploy (#{SlackDeployBot.apps.keys.join('|')})#branch_or_tag to production*"
       end
 
       command 'changelog' do
