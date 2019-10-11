@@ -14,7 +14,7 @@ module SlackDeployBot
       client.send(:logger).info "env: #{env}"
 
       envs = app_config[:envs].map(&:to_sym)
-      envs.include?(env.to_sym)  || say_error(client, data, "Invalid env `#{env}`, use: #{envs.join(', ')}")
+      envs.include?(env.to_sym) || say_error(client, data, "Invalid env `#{env}`, use: #{envs.join(', ')}")
       git = Utils::Git.new(app_config[:path])
       git.fetch_branches         || say_error(client, data, "Cannot fetch branches")
       git.branch_exists?(branch) || say_error(client, data, "Unknown git branch `#{branch}`")
@@ -28,14 +28,14 @@ module SlackDeployBot
       client.send(:logger).info "command: #{cmd}"
 
       error_happened = false
-      Utils::Subprocess.new(cmd) do |stdout, stderr, thread|
-        if stdout && !stdout.empty?
+      Utils::Subprocess.new(cmd) do |stdout, stderr, _thread|
+        if stdout.present? # && !stdout.empty?
           client.send(:logger).info stdout
           if stdout =~ /failed\:/ || stdout =~ /command not found/
             error_happened = true
             say_error(client, data, "Deploy failed with error: #{stdout}. More info at logs/deploybot.log")
           end
-        elsif stderr && !stderr.empty?
+        elsif stderr.present? # && !stderr.empty?
           client.send(:logger).error stderr
           error_happened = true
           say_error(client, data, "Deploy failed with error: #{stderr}. More info at logs/deploybot.log")
