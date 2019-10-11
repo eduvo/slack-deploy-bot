@@ -24,7 +24,7 @@ module SlackDeployBot
     validation_result = AppConfigValidator.new
     validation_result.call(config)
 
-    def self.validate(app_name, config)
+    def self.validate(_app_name, config)
       validation_result = AppConfigValidator.new
       validation_result.call(config)
     end

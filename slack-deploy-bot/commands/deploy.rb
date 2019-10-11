@@ -29,13 +29,13 @@ module SlackDeployBot
 
       error_happened = false
       Utils::Subprocess.new(cmd) do |stdout, stderr, _thread|
-        if stdout.present? # && !stdout.empty?
+        if stdout.present?
           client.send(:logger).info stdout
           if stdout =~ /failed\:/ || stdout =~ /command not found/
             error_happened = true
             say_error(client, data, "Deploy failed with error: #{stdout}. More info at logs/deploybot.log")
           end
-        elsif stderr.present? # && !stderr.empty?
+        elsif stderr.present?
           client.send(:logger).error stderr
           error_happened = true
           say_error(client, data, "Deploy failed with error: #{stderr}. More info at logs/deploybot.log")
