@@ -1,3 +1,0 @@
-[submodule "spec/support/dummy_app"]
-	path = spec/support/dummy_app
-	url = https://github.com/accessd/sample_app.git
