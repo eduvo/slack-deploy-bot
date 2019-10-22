@@ -7,7 +7,7 @@ module SlackDeployBot
         Open3.popen3(cmd) do |stdin, stdout, stderr, thread|
           { :out => stdout, :err => stderr }.each do |key, stream|
             Thread.new do
-              until (line = stream.gets).nil? do
+              until (line = stream.gets).nil?
                 if key == :out
                   yield line, nil, thread if block_given?
                 else

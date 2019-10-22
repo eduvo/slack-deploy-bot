@@ -24,7 +24,7 @@ module SlackDeployBot
       username = client.users[data.user][:name]
       client.send(:logger).info "user: #{username}"
       client.say(channel: data.channel, text: "#{username} started deploying #{app_name}##{branch} to #{env}")
-      cmd = "cd #{app_config[:path]}; #{app_config[:deploy_cmd].call(env, branch)}"
+      cmd = "cd #{app_config[:path]} && #{app_config[:deploy_cmd].call(env, branch)}"
       client.send(:logger).info "command: #{cmd}"
 
       error_happened = false
